@@ -58,11 +58,25 @@ jobs:
 
 He introducido un archivo de prueba dentro de la carpeta hangman-front denominado prueba1.txt y he ejecutado los siguientes comandos:
 ```bash
-git add hangman-front/prueba1.txt # Añade el archivo de prueba
+git checkout -b feature/prueba-PR # 1. Crear una nueva rama para tu feature
+git add . * # Añade los archivos al staging area
 git commit -m "Add prueba1.txt" # Realiza un commit
-git push origin main # Sube los cambios al repositorio
+git push origin feature/prueba-PR # Sube los cambios al repositorio
 gh pr create --title "Añadido archivo prueba1.txt" --body "PR para archivo prueba1.txt" # Crea una PR
 ```
+
+* Creación de Pull Request (PR) desde la terminal
+![Comprobación PR](./images/prueba1.png)
+
+* Ejecución del workflow en la PR
+![Comprobación PR](./images/prueba2.png)
+
+* Resultado del workflow en la PR
+![Comprobación PR](./images/prueba3.png)
+
+* Resultado correcto del workflow en la PR
+![Comprobación PR](./images/prueba4.png)
+
 ## 2. Crea un workflow CD para el proyecto de frontend - OBLIGATORIO
 Crea un nuevo workflow que se dispare manualmente y haga lo siguiente:
 
@@ -70,10 +84,66 @@ Crea un nuevo workflow que se dispare manualmente y haga lo siguiente:
 - Publicar dicha imagen en el container registry de GitHub
 
 ### Solución
-He creado el archivo .github/workflows/build_and_push_image.yml con el siguiente contenido:
+* He creado el archivo .github/workflows/build_and_push_image.yml con el siguiente contenido:
 ```yaml
 name: Hangman Frontend CD
+
 on:
-  workflow_dispatch: # Se ejecuta manualmente
+    workflow_dispatch:  # Permite la ejecución manual del workflow
+  
 jobs:
+    build-and-push:
+      runs-on: ubuntu-latest
+
+      permissions:
+        contents: read
+        packages: write
+
+      steps:
+        - name: Checkout repository # Obtener el código del repositorio
+          uses: actions/checkout@v4
+
+        - name: Login to GitHub Container Registry # Autenticación en el GitHub Container Registry
+          uses: docker/login-action@v3
+          with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: Build and push Docker image
+          uses: docker/build-push-action@v5
+          with:
+            context: ./hangman-front  # Directorio hangman-front
+            file: ./hangman-front/Dockerfile  # Especifica la ubicación del Dockerfile
+            push: true
+            tags: |
+              ghcr.io/${{ github.repository }}:latest
+              ghcr.io/${{ github.repository }}:${{ github.sha }}
 ```
+* He subido a GitHub los cambios realizados ejecutando los siguientes comandos:
+```bash
+git add README.md .github/workflows/create_image_publish_container_registry_github.yml
+```
+
+* He realizado un commit con los cambios:
+```bash
+git commit -m "Update README.md and add create_image_publish_container_registry_github.yml"
+```
+
+* Subir a github, en la rama creada prueba1
+```bash
+git push origin feature/prueba1
+```
+
+* Acceder al repositorio workflow_ci_hangman-front, ubicarse en la rama prueba1 y acceder a la pestaña Actions, para comprobar que hay una ejecución manual que puede realizarse
+![Ejecución manual Workflow](./images/ejecucion_manual_workflow.png)
+
+* Ejecutar el workflow manualmente
+
+![Ejecución manual Workflow](./images/ejecucion_manual_workflow2.png)
+
+* Verificar que el workflow se ha ejecutado correctamente
+![Ejecución manual Workflow](./images/verificar_job.png)
+
+* Verificar que se ha subido correctamente al container registry de Github (https://github.com/dmpinero?tab=packages)
+![Ejecución manual Workflow](./images/verificar_container_registry.png)
