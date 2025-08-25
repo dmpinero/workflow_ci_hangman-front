@@ -144,3 +144,6 @@ git push origin feature/prueba1
 
 * Verificar que el workflow se ha ejecutado correctamente
 ![Ejecución manual Workflow](./images/verificar_job.png)
+
+* Verificar que se ha subido correctamente al container registry de Github (https://github.com/dmpinero?tab=packages)
+![Ejecución manual Workflow](./images/verificar_container_registry.png)
