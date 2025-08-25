@@ -58,10 +58,9 @@ jobs:
 
 He introducido un archivo de prueba dentro de la carpeta hangman-front denominado prueba1.txt y he ejecutado los siguientes comandos:
 ```bash
-git checkout -b feature/prueba1 # Crea una nueva rama
 git add hangman-front/prueba1.txt # Añade el archivo de prueba
 git commit -m "Add prueba1.txt" # Realiza un commit
-git push origin feature/prueba1 # Sube los cambios al repositorio
+git push origin main # Sube los cambios al repositorio
 gh pr create --title "Añadido archivo prueba1.txt" --body "PR para archivo prueba1.txt" # Crea una PR
 ```
 ## 2. Crea un workflow CD para el proyecto de frontend - OBLIGATORIO
