@@ -64,6 +64,20 @@ git commit -m "Add prueba1.txt" # Realiza un commit
 git push origin feature/prueba-PR # Sube los cambios al repositorio
 gh pr create --title "Añadido archivo prueba1.txt" --body "PR para archivo prueba1.txt" # Crea una PR
 ```
+
+* Creación de Pull Request (PR) desde la terminal
+
+![Comprobación PR](./images/prueba1.png)
+
+* Ejecución del workflow en la PR
+![Comprobación PR](./images/prueba2.png)
+
+* Resultado del workflow en la PR
+![Comprobación PR](./images/prueba3.png)
+
+* Resultado correcto del workflow en la PR
+![Comprobación PR](./images/prueba4.png)
+
 ## 2. Crea un workflow CD para el proyecto de frontend - OBLIGATORIO
 Crea un nuevo workflow que se dispare manualmente y haga lo siguiente:
 
