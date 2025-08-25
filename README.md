@@ -66,7 +66,6 @@ gh pr create --title "Añadido archivo prueba1.txt" --body "PR para archivo prue
 ```
 
 * Creación de Pull Request (PR) desde la terminal
-
 ![Comprobación PR](./images/prueba1.png)
 
 * Ejecución del workflow en la PR
